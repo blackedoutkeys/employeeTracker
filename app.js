@@ -2,6 +2,9 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 const cTable = require("console.table")
+const chalk = require ("chalk")
+const clear = require('clear');
+const figlet = require('figlet');
 
 const {
     table
@@ -20,10 +23,19 @@ connection.connect(function (err) {
     console.log("Good Connection!")
 })
 
+function initialLoad(){
+    clear();
+
+    console.log(
+        chalk.yellow(
+          figlet.textSync('Employee Tracker', { horizontalLayout: 'full' })
+        )
+      );
+}
+initialLoad();
 
 //main screen functionality 
 function homePage() {
-
     inquirer.prompt([{
             type: 'list',
             message: 'What would you like to do?',
@@ -83,7 +95,7 @@ function homePage() {
 
 //function to call all employees from table
 function viewAllEmployees() {
-    connection.query("SELECT * FROM employee ", function (err, res) => {
+    connection.query("SELECT * FROM employee ", function (err, res) {
         if (err) throw err;
         console.table(res);
         homePage();
@@ -92,7 +104,7 @@ function viewAllEmployees() {
 
 //function to call all employees from role table
 function viewEmployeesByRole() {
-    connection.query("SELECT * FROM role ", function (err, res) => {
+    connection.query("SELECT * FROM role ", function (err, res) {
         if (err) throw err;
         console.table(res);
         homePage();
@@ -101,7 +113,7 @@ function viewEmployeesByRole() {
 
 //function to call all employees from department table
 function viewEmployeesbyDept() {
-    connection.query("SELECT * FROM department ", function (err, res) => {
+    connection.query("SELECT * FROM department ", function (err, res) {
         if (err) throw err;
         console.table(res);
         homePage();
@@ -111,15 +123,18 @@ function viewEmployeesbyDept() {
 //update employee information
 
 function updateEmployee() {
-    inquirer.prompt([{
+    inquirer.prompt([
+        {
             type: "input",
             message: "Which employee would you like to update?",
             name: "employeeUpdate",
-        } {
+        },
+        {
             type: "input",
             message: "What do you want to update their role to?",
             name: "updateRole",
-        }, ])
+        },
+     ])
         .then((answer) => {
             connection.query(
                 "UPDATE employee SET role_id=? WHERE first_name= ?",
