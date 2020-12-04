@@ -20,8 +20,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
-    console.log("Good Connection!")
-})
+   })
 
 function initialLoad(){
     clear();
@@ -121,7 +120,7 @@ function viewEmployeesbyDept() {
 }
 
 //update employee information
-
+//issues start here
 function updateEmployee() {
     inquirer.prompt([
         {
@@ -138,7 +137,7 @@ function updateEmployee() {
         .then((answer) => {
             connection.query(
                 "UPDATE employee SET role_id=? WHERE first_name= ?",
-                [answer.updateERole, answer.employeeUpdate],
+                [answer.updateRole, answer.employeeUpdate],
                 (err, res) => {
                     if (err) throw err;
                     console.log(res);
