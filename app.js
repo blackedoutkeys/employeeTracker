@@ -6,13 +6,12 @@ const chalk = require ("chalk")
 const clear = require('clear');
 const figlet = require('figlet');
 
-const {
-    table
-} = require("console");
+const { table } = require("console");
 
 //SQL Connection 
 var connection = mysql.createConnection({
     host: "localhost",
+    port: 3306,
     user: "root",
     password: "pHarynx-Cr4ter-l4D#",
     database: "employee_DB"
@@ -20,6 +19,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function (err) {
     if (err) throw err;
+    console.log ('Connected as ID' + connection.threadId);
    })
 
 function initialLoad(){
@@ -171,7 +171,7 @@ function addNewEmployee() {
         ])
         .then((answer) => {
             connection.query(
-                "INSERT INTO employee (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)",
+                "INSERT INTO employee (first_name, last_name, manager_id, role_id) VALUES (?, ?, ?, ?)",
 
                 [
                     answer.aeFirstName,

@@ -19,13 +19,13 @@ VALUES
     ('Marketing Manager', 102500, 4);
 
 INSERT INTO employee
-    (first_name, last_name, role_id, manager_id)
+    (first_name, last_name, manager_id, role_id)
 VALUES
     ('Tommy', 'Pickles', 1, 1),
-    ('Angelica', 'Pickles', 2, NULL),
-    ('Charles', 'Finster', 3, 2),
-    ('Phillip', 'DeVille', 4, NULL),
-    ('Lillian', 'DeVille', 5, 3),
-    ('Susanna', 'Carmichael', 6, NULL),
+    ('Angelica', 'Pickles', NULL, 2),
+    ('Charles', 'Finster', 2, 3),
+    ('Phillip', 'DeVille', NULL, 4),
+    ('Lillian', 'DeVille', 3, 5),
+    ('Susanna', 'Carmichael', NULL, 6),
     ('Kimiko', 'Watanabe', 7, 7),
-    ('Spike', 'TheDog', 8, NULL);
+    ('Spike', 'TheDog', NULL, 8);
