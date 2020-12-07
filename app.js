@@ -41,12 +41,15 @@ function homePage() {
             name: 'choice',
             choices: [
                 "View All Employees",
-                "View Employees By Role",
-                "View Employees By Department",
+                "View Roles",
+                "View Departments",
                 "Update Employee Information",
                 "Add New Employee",
                 "Add Role To Company",
                 "Add Department To Company",
+                "Delete Employee",
+                "Delete Role",
+                "Delete Department",
                 "Exit"
             ]
         }
@@ -58,11 +61,11 @@ function homePage() {
                 viewAllEmployees();
                 break;
 
-            case "View Employees By Role":
+            case "View Roles":
                 viewEmployeesByRole();
                 break;
 
-            case "View Employees By Department":
+            case "View Departments":
                 viewEmployeesbyDept();
                 break;
 
@@ -80,6 +83,18 @@ function homePage() {
 
             case "Add Department To Company":
                 addDept();
+                break;
+
+                case "Delete Employee":
+                deleteEmployee();
+                break;
+                
+                case "Delete Role":
+                deleteRole();
+                break;
+                
+                case "Delete Department":
+                deleteDept();
                 break;
 
             case "Exit":
@@ -122,6 +137,7 @@ function viewEmployeesbyDept() {
 //update employee information
 //issues start here
 function updateEmployee() {
+    // viewAllEmployees();
     inquirer.prompt([
         {
             type: "input",
@@ -140,12 +156,13 @@ function updateEmployee() {
                 [answer.updateRole, answer.employeeUpdate],
                 (err, res) => {
                     if (err) throw err;
-                    console.log(res);
+                    console.table(res);
+                    homePage();
                 }
             );
         });
-    homePage();
 }
+
 
 function addNewEmployee() {
     inquirer.prompt([{
@@ -167,7 +184,8 @@ function addNewEmployee() {
                 type: "input",
                 message: "What is the employee's manager id number?",
                 name: "aeManagerId",
-            },
+            }
+           
         ])
         .then((answer) => {
             connection.query(
@@ -182,7 +200,7 @@ function addNewEmployee() {
                 (err, res) => {
                     if (err) throw err;
                     console.table(res);
-                    startScreen();
+                    homePage();
                 }
             );
         });
@@ -215,6 +233,7 @@ function addNewRole() {
                 (err, res) => {
                     if (err) throw err;
                     console.table(res);
+                    homePage();
                 }
             );
         });
@@ -234,13 +253,83 @@ function addDept() {
                 (err, res) => {
                     if (err) throw err;
                     console.table(res);
-                    startScreen();
+                    homePage();
                 }
             );
         });
 }
+
+function deleteEmployee () {
+    inquirer.prompt([{
+        type: "input",
+        message: "What is the first name of the employee do you want to delete?",
+        name: "deleteFN",
+    },
+    {
+        type: "input",
+        message: "What is the last name of the employee do you want to delete?",
+        name: "deleteLN",
+    } ])
+    .then((answer) => {
+        connection.query(
+            "DELETE FROM employee WHERE first_name=? AND last_name=?;",
+            [answer.deleteFN, answer.deleteLN],
+            (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                homePage();
+            }
+        );
+    });
+}
+
+function deleteRole () {
+    inquirer.prompt([{
+        type: "input",
+        message: "What role do you want to delete?",
+        name: "deleteRole",
+    }, ])
+    .then((answer) => {
+        connection.query(
+            "DELETE FROM role WHERE title=?;" ,
+            [answer.deleteRole],
+            (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                homePage();
+            }
+        );
+    });
+}
+
+function deleteDept () {
+    inquirer.prompt([{
+        type: "input",
+        message: "What department do you want to delete?",
+        name: "deleteDepartmentName",
+    }, ])
+    .then((answer) => {
+        connection.query(
+            "DELETE FROM department WHERE name=?;" ,
+            [answer.deleteDepartmentName],
+            (err, res) => {
+                if (err) throw err;
+                console.table(res);
+                homePage();
+            }
+        );
+    });
+}
+
 //exit function to return user back to menu or out of program
 function exit() {
+    clear();
+
+    console.log(
+        chalk.green(
+          figlet.textSync('Long Live Reptar', { horizontalLayout: 'full' })
+        )
+      );
     connection.end
     process.exit();
     //connection.end();

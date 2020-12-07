@@ -19,7 +19,7 @@ VALUES
     ('Marketing Manager', 102500, 4);
 
 INSERT INTO employee
-    (first_name, last_name, manager_id, role_id)
+    (first_name, last_name, manager_id, role_id, department_id)
 VALUES
     ('Tommy', 'Pickles', 1, 1),
     ('Angelica', 'Pickles', NULL, 2),
