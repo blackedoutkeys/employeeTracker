@@ -3,7 +3,7 @@ INSERT INTO department
 VALUES
     ('Sales'),
     ('Account Management'),
-    ('Risk'),
+    ('HR'),
     ('Marketing');
 
 INSERT INTO role
@@ -19,13 +19,13 @@ VALUES
     ('Marketing Manager', 102500, 4);
 
 INSERT INTO employee
-    (first_name, last_name, manager_id, role_id, department_id)
+    (first_name, last_name, role_id, manager_id)
 VALUES
     ('Tommy', 'Pickles', 1, 1),
-    ('Angelica', 'Pickles', NULL, 2),
-    ('Charles', 'Finster', 2, 3),
-    ('Phillip', 'DeVille', NULL, 4),
+    ('Angelica', 'Pickles', 2, NULL),
+    ('Charles', 'Finster', 2, 1),
+    ('Phillip', 'DeVille', 3, 5),
     ('Lillian', 'DeVille', 3, 5),
-    ('Susanna', 'Carmichael', NULL, 6),
-    ('Kimiko', 'Watanabe', 7, 7),
-    ('Spike', 'TheDog', NULL, 8);
+    ('Susanna', 'Carmichael', 3, 5),
+    ('Kimiko', 'Watanabe', 7, 8),
+    ('Spike', 'TheDog', 8, 8);
